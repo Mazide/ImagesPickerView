@@ -1,8 +1,8 @@
 //
 //  ViewController.h
-//  ImagePickerSheet
+//  ImagePickerController
 //
-//  Created by Nikita Demidov on 03/03/16.
+//  Created by Nikita Demidov on 02/03/16.
 //  Copyright © 2016 Nikita Demidov. All rights reserved.
 //
 
