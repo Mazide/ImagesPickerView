@@ -47,8 +47,6 @@ static const NSInteger previewRowIndex = 0;
 #pragma mark - UITableViewDelegate
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
-//    Action* action = [self itemForIndexPath:indexPath];
-//    action.handler ? action.handler(action) : nil;
     if (self.actionSheetDelegate && [self.actionSheetDelegate respondsToSelector:@selector(didSelectItemWithIndexPath:)]) {
         [self.actionSheetDelegate didSelectItemWithIndexPath:indexPath];
     }
@@ -72,9 +70,8 @@ static const NSInteger previewRowIndex = 0;
 
 - (UIView *)tableView:(UITableView *)tableView viewForFooterInSection:(NSInteger)section{
     
-    if (section == actionsSectionIndex) {
+    if (section == actionsSectionIndex)
         return nil;
-    }
     
     UIView* footer = [[UIView alloc] init];
     footer.backgroundColor = [UIColor clearColor];

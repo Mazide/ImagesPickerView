@@ -13,7 +13,6 @@
 		95EAA3601C8861B500D64287 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 95EAA35F1C8861B500D64287 /* AppDelegate.m */; };
 		95EAA3761C8861B500D64287 /* ImagePickerSheetTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 95EAA3751C8861B500D64287 /* ImagePickerSheetTests.m */; };
 		95EAA3811C8861B500D64287 /* ImagePickerSheetUITests.m in Sources */ = {isa = PBXBuildFile; fileRef = 95EAA3801C8861B500D64287 /* ImagePickerSheetUITests.m */; };
-		95EAA3AE1C8861D900D64287 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 95EAA3901C8861D900D64287 /* ViewController.m */; };
 		95EAA3AF1C8861D900D64287 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 95EAA3911C8861D900D64287 /* Main.storyboard */; };
 		95EAA3B01C8861D900D64287 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 95EAA3921C8861D900D64287 /* Assets.xcassets */; };
 		95EAA3B11C8861D900D64287 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 95EAA3931C8861D900D64287 /* LaunchScreen.storyboard */; };
@@ -67,8 +66,6 @@
 		95EAA37C1C8861B500D64287 /* ImagePickerSheetUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ImagePickerSheetUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		95EAA3801C8861B500D64287 /* ImagePickerSheetUITests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ImagePickerSheetUITests.m; sourceTree = "<group>"; };
 		95EAA3821C8861B500D64287 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		95EAA38F1C8861D900D64287 /* ViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ViewController.h; sourceTree = "<group>"; };
-		95EAA3901C8861D900D64287 /* ViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ViewController.m; sourceTree = "<group>"; };
 		95EAA3911C8861D900D64287 /* Main.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Main.storyboard; sourceTree = "<group>"; };
 		95EAA3921C8861D900D64287 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		95EAA3931C8861D900D64287 /* LaunchScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = LaunchScreen.storyboard; sourceTree = "<group>"; };
@@ -225,8 +222,6 @@
 			children = (
 				95EAA35E1C8861B500D64287 /* AppDelegate.h */,
 				95EAA35F1C8861B500D64287 /* AppDelegate.m */,
-				95EAA38F1C8861D900D64287 /* ViewController.h */,
-				95EAA3901C8861D900D64287 /* ViewController.m */,
 				95EAA3911C8861D900D64287 /* Main.storyboard */,
 				95EAA3921C8861D900D64287 /* Assets.xcassets */,
 				95EAA3931C8861D900D64287 /* LaunchScreen.storyboard */,
@@ -418,7 +413,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				95EAA3B51C8861D900D64287 /* ActionsTableViewService.m in Sources */,
-				95EAA3AE1C8861D900D64287 /* ViewController.m in Sources */,
 				952D817B1C8896EA00DCED39 /* UITableViewCell+RoundedCorners.m in Sources */,
 				95EAA3B71C8861D900D64287 /* TransitionAnimationController.m in Sources */,
 				95EAA3CA1C8873F100D64287 /* PreviewViewService.m in Sources */,
