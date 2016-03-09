@@ -46,7 +46,6 @@
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath{
     
     NSString* cellIdentifier = NSStringFromClass([PreviewCollectionViewCell class]);
-    [collectionView registerNib:[UINib nibWithNibName:cellIdentifier bundle:nil] forCellWithReuseIdentifier:cellIdentifier];
     PreviewCollectionViewCell* cell = [collectionView dequeueReusableCellWithReuseIdentifier:cellIdentifier forIndexPath:indexPath];
     
     PHAsset* asset = [self.fetchResult objectAtIndex:indexPath.row];

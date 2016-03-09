@@ -8,7 +8,7 @@
 
 #import "TransitionAnimationController.h"
 
-static const CGFloat transitionDuration = 0.3;
+static const CGFloat transitionDuration = 0.2;
 
 @interface TransitionAnimationController()
 
@@ -36,11 +36,11 @@ static const CGFloat transitionDuration = 0.3;
     UIView *containerView = [transitionContext containerView];
     
     [containerView addSubview:toViewController.view];
-    toViewController.view.alpha = 0.f;
-
+    toViewController.view.backgroundColor = [[UIColor blackColor] colorWithAlphaComponent:0.f];
+    
     [UIView animateWithDuration:transitionDuration animations:^{
         
-        toViewController.view.alpha = 1.f;
+        toViewController.view.backgroundColor = [[UIColor blackColor] colorWithAlphaComponent:0.3f];
     } completion:^(BOOL finished) {
         
         toViewController.view.frame = finalFrame;
@@ -52,7 +52,7 @@ static const CGFloat transitionDuration = 0.3;
     [UIView animateWithDuration:[self transitionDuration:transitionContext] delay:0.f options:UIViewAnimationOptionCurveLinear animations:^{
         self.presentingVC.view.alpha = 0.f;
     } completion:^(BOOL finished) {
-        [transitionContext completeTransition:finished];        
+        [transitionContext completeTransition:finished];
     }];
 }
 

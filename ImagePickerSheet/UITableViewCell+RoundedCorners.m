@@ -16,7 +16,7 @@
         self.backgroundColor = UIColor.clearColor;
         CAShapeLayer *layer = [[CAShapeLayer alloc] init];
         CGMutablePathRef pathRef = CGPathCreateMutable();
-        CGRect bounds = CGRectInset(self.bounds, 10, 0);
+        CGRect bounds = CGRectInset(self.bounds, 0, 0);
         BOOL addLine = NO;
         if (indexPath.row == 0 && indexPath.row == [tableView numberOfRowsInSection:indexPath.section]-1) {
             CGPathAddRoundedRect(pathRef, nil, bounds, cornerRadius, cornerRadius);
@@ -42,7 +42,7 @@
         if (addLine == YES) {
             CALayer *lineLayer = [[CALayer alloc] init];
             CGFloat lineHeight = (1.f / [UIScreen mainScreen].scale);
-            lineLayer.frame = CGRectMake(CGRectGetMinX(bounds), bounds.size.height-lineHeight, bounds.size.width - 10, lineHeight);
+            lineLayer.frame = CGRectMake(CGRectGetMinX(bounds), bounds.size.height-lineHeight, bounds.size.width, lineHeight);
             lineLayer.backgroundColor = tableView.separatorColor.CGColor;
             [layer addSublayer:lineLayer];
         }

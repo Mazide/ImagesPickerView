@@ -12,40 +12,53 @@
 #import "ActionsTableViewService.h"
 #import "ActionSheetTableView.h"
 #import "TransitionAnimationController.h"
+#import "TransitionDelegate.h"
 
-@interface ImagePickerViewController () <UIViewControllerTransitioningDelegate>
+@interface ImagePickerViewController ()
 
 @property (weak, nonatomic) ActionSheetTableView* actionsSheetTableView;
 @property (strong, nonatomic) ActionsTableViewService* actionsTableViewService;
 
+@property (strong, nonatomic) TransitionDelegate* transitionDelegate;
+
 @end
 
-@implementation ImagePickerViewController{
-    BOOL showed;
+@implementation ImagePickerViewController
+
+- (instancetype)init{
+    self = [super init];
+    if (self) {
+        self.modalPresentationStyle = UIModalPresentationCustom;
+        
+        self.transitionDelegate = [TransitionDelegate new];
+        self.transitioningDelegate = self.transitionDelegate;
+    }
+    return self;
 }
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    
+    self.view.backgroundColor = [UIColor blackColor];
 
-//    self.transitioningDelegate = self;
     [self configureActionSheetTableView];
-    showed = NO;
 }
 
-- (void)touchesBegan:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event{
-    [self showActionSheet:!showed completion:nil];
-    showed = !showed;
+- (void)viewDidAppear:(BOOL)animated{
+    [super viewDidAppear:animated];
+    [self showActionSheet:YES completion:nil];
 }
 
 - (void)configureActionSheetTableView{
-    
-    ActionSheetTableView* actionsSheetTableView = [[ActionSheetTableView alloc] initWithFrame:self.view.frame];
+    CGFloat indent = 10.f;
+    ActionSheetTableView* actionsSheetTableView = [[ActionSheetTableView alloc] initWithFrame:CGRectMake(self.view.frame.origin.x + indent, self.view.frame.origin.y, self.view.frame.size.width - 2 * indent, self.view.frame.size.height)];
     self.actionsSheetTableView = actionsSheetTableView;
     [self.view addSubview:self.actionsSheetTableView];
     
     NSArray* actions = [self actions];
     NSArray* cancelAction = [self cancelActions];
     self.actionsTableViewService = [[ActionsTableViewService alloc] initWithActions:actions cancelActions:cancelAction needPreview:YES];
+    
     self.actionsSheetTableView.dataSource = self.actionsTableViewService;
     self.actionsSheetTableView.actionSheetDelegate = self.actionsTableViewService;
     
@@ -87,8 +100,9 @@
     Action* cancelAction = [Action new];
     cancelAction.title = @"Cancel";
     cancelAction.handler = ^(Action* action){
-        [self showActionSheet:NO completion:nil];
-//        [self dismissViewControllerAnimated:YES completion:nil];
+        [self showActionSheet:NO completion:^{
+            [self dismissViewControllerAnimated:YES completion:nil];
+        }];
     };
 
     return @[cancelAction];
@@ -98,7 +112,7 @@
 
 - (void)showActionSheet:(BOOL)show completion:(void (^)())completionBlock{
 
-    NSTimeInterval animationDuration = show ? 0.3f : 0.2f;
+    NSTimeInterval animationDuration = show ? 0.2f : 0.15f;
     
     CGFloat showedY = self.view.frame.size.height - self.actionsSheetTableView.frame.size.height;
     CGFloat hiddenY = self.view.frame.size.height;
@@ -109,21 +123,10 @@
         frame.origin.y = destionationY;
         self.actionsSheetTableView.frame = frame;
     } completion:^(BOOL finished) {
-        completionBlock ? completionBlock() : nil;
+        if (finished) {
+            completionBlock ? completionBlock() : nil;
+        }
     }];
-}
-
-
-#pragma mark - UIViewControllerTransitioningDelegate
-
-- (nullable id <UIViewControllerAnimatedTransitioning>)animationControllerForPresentedController:(UIViewController *)presented presentingController:(UIViewController *)presenting sourceController:(UIViewController *)source{
-    TransitionAnimationController* transitionAnimationController = [[TransitionAnimationController alloc] initWithPresentingVC:presenting presenting:YES];
-    return transitionAnimationController;
-}
-
-- (nullable id <UIViewControllerAnimatedTransitioning>)animationControllerForDismissedController:(UIViewController *)dismissed{
-    TransitionAnimationController* transitionAnimationController = [[TransitionAnimationController alloc] initWithPresentingVC:dismissed presenting:NO];
-    return transitionAnimationController;
 }
 
 #pragma mark - presenting

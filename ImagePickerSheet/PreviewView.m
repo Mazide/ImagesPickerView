@@ -40,6 +40,10 @@
 }
 
 - (void)configureCollectionView{
+
+    NSString* cellIdentifier = NSStringFromClass([PreviewCollectionViewCell class]);
+    [self.collectionView registerNib:[UINib nibWithNibName:cellIdentifier bundle:nil] forCellWithReuseIdentifier:cellIdentifier];
+    
     self.previewViewService = [PreviewViewService new];
     self.collectionView.dataSource = self.previewViewService;
     self.collectionView.delegate = self;

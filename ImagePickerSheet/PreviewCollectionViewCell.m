@@ -7,11 +7,11 @@
 //
 
 #import "PreviewCollectionViewCell.h"
-#import <QuartzCore/QuartzCore.h>
 
 @implementation PreviewCollectionViewCell
 
 - (void)awakeFromNib {
+    
 }
 
 - (void)setChecked:(BOOL)checked{

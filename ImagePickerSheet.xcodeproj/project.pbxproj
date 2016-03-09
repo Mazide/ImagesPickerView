@@ -9,6 +9,8 @@
 /* Begin PBXBuildFile section */
 		952D817B1C8896EA00DCED39 /* UITableViewCell+RoundedCorners.m in Sources */ = {isa = PBXBuildFile; fileRef = 952D817A1C8896EA00DCED39 /* UITableViewCell+RoundedCorners.m */; };
 		954550821C89A54C00170E69 /* ActionSheetTableView.m in Sources */ = {isa = PBXBuildFile; fileRef = 954550811C89A54C00170E69 /* ActionSheetTableView.m */; };
+		9545508A1C89CE4900170E69 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 954550891C89CE4900170E69 /* ViewController.m */; };
+		955CB8091C90075000446D91 /* TransitionDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 955CB8081C90075000446D91 /* TransitionDelegate.m */; };
 		95EAA35D1C8861B500D64287 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 95EAA35C1C8861B500D64287 /* main.m */; };
 		95EAA3601C8861B500D64287 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 95EAA35F1C8861B500D64287 /* AppDelegate.m */; };
 		95EAA3761C8861B500D64287 /* ImagePickerSheetTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 95EAA3751C8861B500D64287 /* ImagePickerSheetTests.m */; };
@@ -56,6 +58,10 @@
 		9545507F1C89924B00170E69 /* ImagePickerSheet.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = ImagePickerSheet.entitlements; sourceTree = "<group>"; };
 		954550801C89A54C00170E69 /* ActionSheetTableView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ActionSheetTableView.h; sourceTree = "<group>"; };
 		954550811C89A54C00170E69 /* ActionSheetTableView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ActionSheetTableView.m; sourceTree = "<group>"; };
+		954550881C89CE4900170E69 /* ViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ViewController.h; sourceTree = "<group>"; };
+		954550891C89CE4900170E69 /* ViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ViewController.m; sourceTree = "<group>"; };
+		955CB8071C90075000446D91 /* TransitionDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TransitionDelegate.h; sourceTree = "<group>"; };
+		955CB8081C90075000446D91 /* TransitionDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TransitionDelegate.m; sourceTree = "<group>"; };
 		95EAA3581C8861B500D64287 /* ImagePickerSheet.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ImagePickerSheet.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		95EAA35C1C8861B500D64287 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		95EAA35E1C8861B500D64287 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
@@ -135,6 +141,8 @@
 		954550861C89BC3A00170E69 /* CustomTransition */ = {
 			isa = PBXGroup;
 			children = (
+				955CB8071C90075000446D91 /* TransitionDelegate.h */,
+				955CB8081C90075000446D91 /* TransitionDelegate.m */,
 				95EAA39C1C8861D900D64287 /* TransitionAnimationController.h */,
 				95EAA39D1C8861D900D64287 /* TransitionAnimationController.m */,
 			);
@@ -223,6 +231,8 @@
 				95EAA35E1C8861B500D64287 /* AppDelegate.h */,
 				95EAA35F1C8861B500D64287 /* AppDelegate.m */,
 				95EAA3911C8861D900D64287 /* Main.storyboard */,
+				954550881C89CE4900170E69 /* ViewController.h */,
+				954550891C89CE4900170E69 /* ViewController.m */,
 				95EAA3921C8861D900D64287 /* Assets.xcassets */,
 				95EAA3931C8861D900D64287 /* LaunchScreen.storyboard */,
 				95EAA3941C8861D900D64287 /* Info.plist */,
@@ -412,10 +422,12 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				9545508A1C89CE4900170E69 /* ViewController.m in Sources */,
 				95EAA3B51C8861D900D64287 /* ActionsTableViewService.m in Sources */,
 				952D817B1C8896EA00DCED39 /* UITableViewCell+RoundedCorners.m in Sources */,
 				95EAA3B71C8861D900D64287 /* TransitionAnimationController.m in Sources */,
 				95EAA3CA1C8873F100D64287 /* PreviewViewService.m in Sources */,
+				955CB8091C90075000446D91 /* TransitionDelegate.m in Sources */,
 				95EAA3601C8861B500D64287 /* AppDelegate.m in Sources */,
 				95EAA3B61C8861D900D64287 /* Action.m in Sources */,
 				95EAA3BB1C8861D900D64287 /* PreviewCollectionViewCell.m in Sources */,
