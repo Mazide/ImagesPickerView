@@ -29,13 +29,21 @@
 }
 
 -(void)selectedPhotoWithIndexPath:(NSIndexPath *)indexPath{
-    [self.selectedIndexes addObject:indexPath];
+
+    if ([self photoByIndexPathSelected:indexPath]) {
+        [self.selectedIndexes removeObject:indexPath];
+    } else {
+        [self.selectedIndexes addObject:indexPath];
+    }
+}
+
+- (BOOL)photoByIndexPathSelected:(NSIndexPath *)indexPath{
+    return [self.selectedIndexes containsObject:indexPath];
 }
 
 #pragma mark - assets fetch
 
 - (void)fetchMediaAssets{
-    
     PHFetchOptions* fetchOptions = [PHFetchOptions new];
     fetchOptions.sortDescriptors = @[[NSSortDescriptor sortDescriptorWithKey:@"creationDate" ascending:NO]];
     self.fetchResult = [PHAsset fetchAssetsWithOptions:fetchOptions];
@@ -53,7 +61,7 @@
         [cell configureWithItem:image];
     }];
     
-    BOOL imageChecked = [self.selectedIndexes containsObject:indexPath];
+    BOOL imageChecked = [self photoByIndexPathSelected:indexPath];
     [cell setChecked:imageChecked];
     
     return cell;
@@ -74,7 +82,14 @@
     options.resizeMode = PHImageRequestOptionsResizeModeExact;
     options.networkAccessAllowed = NO;
     
-    [[PHImageManager defaultManager] requestImageForAsset:asset targetSize:CGSizeMake(100, 100) contentMode:PHImageContentModeDefault options:nil resultHandler:^(UIImage * _Nullable result, NSDictionary * _Nullable info) {
+    NSInteger retinaMultiplier = [UIScreen mainScreen].scale;
+    CGSize retinaSquare = CGSizeMake(100.f * retinaMultiplier, 100.f * retinaMultiplier);
+
+    [[PHImageManager defaultManager] requestImageForAsset:asset
+                                               targetSize:retinaSquare
+                                              contentMode:PHImageContentModeAspectFill
+                                                  options:options
+                                            resultHandler:^(UIImage * _Nullable result, NSDictionary * _Nullable info) {
         completionHandler ? completionHandler(result) : nil;
     }];
 }

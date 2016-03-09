@@ -2,17 +2,17 @@
   "images" : [
     {
       "idiom" : "universal",
-      "filename" : "PreviewSupplementaryView-Checkmark-Selected.png",
-      "scale" : "1x"
+      "scale" : "1x",
+      "filename" : "check.png"
     },
     {
       "idiom" : "universal",
-      "filename" : "PreviewSupplementaryView-Checkmark-Selected@2x.png",
-      "scale" : "2x"
+      "scale" : "2x",
+      "filename" : "check@2x.png"
     },
     {
       "idiom" : "universal",
-      "filename" : "PreviewSupplementaryView-Checkmark-Selected@3x.png",
+      "filename" : "check@3x.png",
       "scale" : "3x"
     }
   ],

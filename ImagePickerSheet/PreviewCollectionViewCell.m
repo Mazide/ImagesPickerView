@@ -10,10 +10,6 @@
 
 @implementation PreviewCollectionViewCell
 
-- (void)awakeFromNib {
-    
-}
-
 - (void)setChecked:(BOOL)checked{
     self.checkImageView.image = checked ? [UIImage imageNamed:@"check"] : [UIImage imageNamed:@"uncheck"];
 }

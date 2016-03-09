@@ -101,7 +101,11 @@
     cancelAction.title = @"Cancel";
     cancelAction.handler = ^(Action* action){
         [self showActionSheet:NO completion:^{
-            [self dismissViewControllerAnimated:YES completion:nil];
+            [self dismissViewControllerAnimated:YES completion:^{
+                if (self.delegate && [self.delegate respondsToSelector:@selector(imagePickerControllerDidCancel:)]) {
+                    [self.delegate imagePickerControllerDidCancel:self];
+                }
+            }];
         }];
     };
 

@@ -8,8 +8,15 @@
 
 #import <UIKit/UIKit.h>
 
+@protocol PreviewServiceDelegate <NSObject>
+
+
+
+@end
+
 @interface PreviewViewService : NSObject <UICollectionViewDataSource>
 
 - (void)selectedPhotoWithIndexPath:(NSIndexPath*)indexPath;
+- (BOOL)photoByIndexPathSelected:(NSIndexPath*)indexPath;
 
 @end

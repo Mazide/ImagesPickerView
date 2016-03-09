@@ -10,7 +10,7 @@
 
 @protocol PreviewViewDelegate <NSObject>
 
-- (void)didSelectImage:(UIImage*)image;
+- (void)didSelectImages:(NSArray*)images;
 
 @end
 

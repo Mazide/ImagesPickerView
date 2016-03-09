@@ -54,8 +54,10 @@
 
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath{
     PreviewCollectionViewCell* previewCell = (PreviewCollectionViewCell*)[collectionView cellForItemAtIndexPath:indexPath];
-    [previewCell setChecked:YES];
+    
     [self.previewViewService selectedPhotoWithIndexPath:indexPath];
+    BOOL checked = [self.previewViewService photoByIndexPathSelected:indexPath];
+    [previewCell setChecked:checked];
     
     [self.collectionView scrollToItemAtIndexPath:indexPath atScrollPosition:UICollectionViewScrollPositionCenteredHorizontally animated:YES];
 }
