@@ -30,6 +30,15 @@
     return self;
 }
 
+-(instancetype)initWithFrame:(CGRect)frame{
+    self = [super initWithFrame:frame];
+    if (self) {
+        [[NSBundle mainBundle] loadNibNamed:NSStringFromClass([self class]) owner:self options:nil];
+        [self setup];
+    }
+    return self;
+}
+
 #pragma mark - Setup
 
 - (void)setup {
@@ -58,6 +67,11 @@
     [self.previewViewService selectedPhotoWithIndexPath:indexPath];
     BOOL checked = [self.previewViewService photoByIndexPathSelected:indexPath];
     [previewCell setChecked:checked];
+    
+    if (self.delegate && [self.delegate respondsToSelector:@selector(didSelectAssets:)]) {
+        NSArray* assets = [self.previewViewService assets];
+        [self.delegate didSelectAssets:assets];
+    }
     
     [self.collectionView scrollToItemAtIndexPath:indexPath atScrollPosition:UICollectionViewScrollPositionCenteredHorizontally animated:YES];
 }

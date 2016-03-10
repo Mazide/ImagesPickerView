@@ -12,7 +12,7 @@
 #import "PreviewActionSheetTableViewCell.h"
 
 static const CGFloat actionRowHeight = 60.f;
-static const CGFloat previewRowHeight = 120.f;
+static const CGFloat previewRowHeight = 128.f;
 static const CGFloat sectionsHeaderHeight = 20.f;
 
 static const NSInteger actionsSectionIndex = 0;
@@ -27,15 +27,26 @@ static const NSInteger previewRowIndex = 0;
 - (instancetype)initWithFrame:(CGRect)frame{
     self = [super initWithFrame:frame];
     if (self) {
-        self.delegate = self;
+        [self setup];
+    }
+    return self;
+}
+
+- (instancetype)initWithCoder:(NSCoder *)aDecoder{
+    self = [super initWithCoder:aDecoder];
+    if (self) {
         [self setup];
     }
     return self;
 }
 
 - (void)setup{
+    self.delegate = self;
+    
     self.backgroundColor = [UIColor clearColor];
     self.scrollEnabled = NO;
+    self.separatorStyle = UITableViewCellSeparatorStyleNone;
+
     
     NSString* actionCellIdentifier = NSStringFromClass([ActionsSheetCell class]);
     [self registerNib:[UINib nibWithNibName:actionCellIdentifier bundle:nil] forCellReuseIdentifier:actionCellIdentifier];
@@ -53,7 +64,8 @@ static const NSInteger previewRowIndex = 0;
 }
 
 - (void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath{
-    [cell roundCornersForTableView:tableView indexPath:indexPath];
+    BOOL needShowPreview = [self.actionSheetDelegate showPreview];
+    [cell roundCornersForTableView:tableView indexPath:indexPath previewShowed:needShowPreview];
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{

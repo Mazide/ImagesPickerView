@@ -26,13 +26,18 @@
                             </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <gestureRecognizers/>
                         <constraints>
                             <constraint firstItem="zBs-OE-l1N" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" id="g0U-Gn-A8g"/>
                             <constraint firstItem="zBs-OE-l1N" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="yQ9-ut-FpE"/>
                         </constraints>
+                        <connections>
+                            <outletCollection property="gestureRecognizers" destination="iry-x3-WgC" appends="YES" id="diy-80-Cdq"/>
+                        </connections>
                     </view>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
+                <swipeGestureRecognizer direction="right" id="iry-x3-WgC"/>
             </objects>
             <point key="canvasLocation" x="439" y="475"/>
         </scene>

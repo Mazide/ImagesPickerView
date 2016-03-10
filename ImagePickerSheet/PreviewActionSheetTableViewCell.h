@@ -11,5 +11,4 @@
 
 @interface PreviewActionSheetTableViewCell : UITableViewCell <ConfigureTableViewCellProtocol>
 
-
 @end

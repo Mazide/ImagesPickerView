@@ -8,6 +8,7 @@
 
 #import "ActionsSheetCell.h"
 #import "Action.h"
+#import "UITableViewCell+RoundedCorners.h"
 
 @implementation ActionsSheetCell
 
@@ -17,8 +18,6 @@
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {
     [super setSelected:selected animated:animated];
-
-    // Configure the view for the selected state
 }
 
 - (void)configureWithItem:(id)item{

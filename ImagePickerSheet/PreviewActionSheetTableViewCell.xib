@@ -13,18 +13,6 @@
             <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="KGk-i7-Jjw" id="H2p-sc-9uM">
                 <rect key="frame" x="0.0" y="0.0" width="320" height="108.5"/>
                 <autoresizingMask key="autoresizingMask"/>
-                <subviews>
-                    <view clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="4d0-iM-gvi" customClass="PreviewView">
-                        <rect key="frame" x="0.0" y="8" width="320" height="100"/>
-                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
-                    </view>
-                </subviews>
-                <constraints>
-                    <constraint firstItem="4d0-iM-gvi" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="8" id="5nD-5a-Hmz"/>
-                    <constraint firstAttribute="bottom" secondItem="4d0-iM-gvi" secondAttribute="bottom" id="5tP-tZ-HM1"/>
-                    <constraint firstItem="4d0-iM-gvi" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" id="Og6-LQ-lZN"/>
-                    <constraint firstAttribute="trailing" secondItem="4d0-iM-gvi" secondAttribute="trailing" id="gXT-93-SfZ"/>
-                </constraints>
             </tableViewCellContentView>
             <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
             <point key="canvasLocation" x="399" y="363.5"/>

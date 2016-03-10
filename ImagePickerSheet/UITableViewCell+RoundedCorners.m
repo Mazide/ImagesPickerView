@@ -10,7 +10,7 @@
 
 @implementation UITableViewCell (RoundedCorners)
 
-- (void)roundCornersForTableView:(UITableView*)tableView indexPath:(NSIndexPath*)indexPath{
+- (void)roundCornersForTableView:(UITableView*)tableView indexPath:(NSIndexPath*)indexPath previewShowed:(BOOL)previewShowed{
     if ([self respondsToSelector:@selector(tintColor)]) {
         CGFloat cornerRadius = 5.f;
         self.backgroundColor = UIColor.clearColor;
@@ -25,7 +25,7 @@
             CGPathAddArcToPoint(pathRef, nil, CGRectGetMinX(bounds), CGRectGetMinY(bounds), CGRectGetMidX(bounds), CGRectGetMinY(bounds), cornerRadius);
             CGPathAddArcToPoint(pathRef, nil, CGRectGetMaxX(bounds), CGRectGetMinY(bounds), CGRectGetMaxX(bounds), CGRectGetMidY(bounds), cornerRadius);
             CGPathAddLineToPoint(pathRef, nil, CGRectGetMaxX(bounds), CGRectGetMaxY(bounds));
-            addLine = YES;
+            addLine = !previewShowed;
         } else if (indexPath.row == [tableView numberOfRowsInSection:indexPath.section]-1) {
             CGPathMoveToPoint(pathRef, nil, CGRectGetMinX(bounds), CGRectGetMinY(bounds));
             CGPathAddArcToPoint(pathRef, nil, CGRectGetMinX(bounds), CGRectGetMaxY(bounds), CGRectGetMidX(bounds), CGRectGetMaxY(bounds), cornerRadius);

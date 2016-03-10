@@ -10,6 +10,6 @@
 
 @interface UITableViewCell (RoundedCorners)
 
-- (void)roundCornersForTableView:(UITableView*)tableView indexPath:(NSIndexPath*)indexPath;
+- (void)roundCornersForTableView:(UITableView*)tableView indexPath:(NSIndexPath*)indexPath previewShowed:(BOOL)previewShowed;
 
 @end

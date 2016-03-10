@@ -7,6 +7,7 @@
 //
 
 #import "PreviewActionSheetTableViewCell.h"
+#import "PreviewView.h"
 
 @implementation PreviewActionSheetTableViewCell
 
@@ -19,7 +20,10 @@
 }
 
 -(void)configureWithItem:(id)item{
-    
+    PreviewView* previewView = (PreviewView*)item;
+    CGFloat inset = 8.f;
+    previewView.frame = CGRectMake(0, inset, self.frame.size.width, 120.f);
+    [self addSubview:previewView];
 }
 
 @end

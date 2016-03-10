@@ -12,7 +12,7 @@
 
 @protocol ImagePickerViewControllerDelegate <NSObject>
 
-- (void)imagePickerController:(ImagePickerViewController *)picker didFinishPickingImages:(NSArray *)images;
+- (void)imagePickerController:(ImagePickerViewController *)picker didFinishPickingAssets:(NSArray *)assets;
 - (void)imagePickerControllerDidCancel:(ImagePickerViewController *)picker;
 
 @end

@@ -10,33 +10,48 @@
 #import "ActionsSheetCell.h"
 #import "PreviewActionSheetTableViewCell.h"
 #import "UITableViewCell+RoundedCorners.h"
-#import "Action.h"
+#import "PreviewView.h"
 
 @interface ActionsTableViewService()
 
 @property (strong, nonatomic) NSArray* actions;
 @property (strong, nonatomic) NSArray* cancelActions;
-@property (nonatomic) BOOL needPreview;
+
+@property (strong, nonatomic) PreviewView* previewView;
+@property (strong, nonatomic) NSIndexPath* attachActionIndexPath;
 
 @end
 
 @implementation ActionsTableViewService
 
--(instancetype)initWithActions:(NSArray *)actions cancelActions:(NSArray *)cancelActions needPreview:(BOOL)needPreview{
+-(instancetype)initWithActions:(NSArray *)actions cancelActions:(NSArray *)cancelActions previewView:(id)previewVeiw{
     self = [super init];
     if (self) {
         _actions = actions;
         _cancelActions = cancelActions;
-        _needPreview = needPreview;
+        _previewView = previewVeiw;
     }
     return self;
+}
+
+- (void)replaceAction:(id)action byAction:(id)newAction{
+    
+    NSInteger actionRow = [self.actions indexOfObject:action] - (self.previewView ? 1 : 0);
+    self.attachActionIndexPath = [NSIndexPath indexPathForRow:actionRow inSection:0];
+  
+    NSMutableArray* newActions = [NSMutableArray arrayWithArray:self.actions];
+    
+    NSInteger actionIndex = [self.actions indexOfObject:action];
+    [newActions replaceObjectAtIndex:actionIndex withObject:newAction];
+    
+    self.actions = (NSArray*)newActions;
 }
 
 #pragma mark - UITableViewDelegate
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
     NSInteger rowsCount = 0;
-    NSInteger previewRowCoount = self.needPreview ? 1 : 0;
+    NSInteger previewRowCoount = self.previewView ? 1 : 0;
     switch (section) {
         case 0:
             rowsCount = self.actions.count + previewRowCoount;
@@ -68,7 +83,7 @@
 
 - (NSString*)cellIdentifierForIndexPath:(NSIndexPath*)indexPath{
     NSString* cellIdentifier = nil;
-    if (indexPath.row == 0 && indexPath.section == 0 && self.needPreview) {
+    if (indexPath.row == 0 && indexPath.section == 0 && self.previewView) {
         cellIdentifier = NSStringFromClass([PreviewActionSheetTableViewCell class]);
     } else {
         cellIdentifier = NSStringFromClass([ActionsSheetCell class]);
@@ -78,10 +93,10 @@
 
 - (id)itemForIndexPath:(NSIndexPath*)indexPath{
     id item = nil;
-    NSInteger previewRowCount = self.needPreview ? 1 : 0;
+    NSInteger previewRowCount = self.previewView ? 1 : 0;
     switch (indexPath.section) {
         case 0:{
-            item = (self.needPreview && indexPath.row == 0) ? nil : self.actions[indexPath.row - previewRowCount];
+            item = (self.previewView && indexPath.row == 0) ? self.previewView : self.actions[indexPath.row - previewRowCount];
         }
             break;
         case 1:
@@ -96,7 +111,9 @@
 #pragma mark - ActionSheetTableViewDelegate
 
 - (void)didSelectItemWithIndexPath:(NSIndexPath *)indexPath{
+    
     Action* action = [self itemForIndexPath:indexPath];
+    
     if (!action)
         return;
     
@@ -104,7 +121,7 @@
 }
 
 - (BOOL)showPreview{
-    return self.needPreview;
+    return self.previewView ? YES : NO;
 }
 
 @end
