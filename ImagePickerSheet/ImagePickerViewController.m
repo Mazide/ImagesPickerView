@@ -20,6 +20,7 @@
 @property (strong, nonatomic) ActionsTableViewService* actionsTableViewService;
 
 @property (strong, nonatomic) TransitionDelegate* transitionDelegate;
+@property (weak, nonatomic) UIGestureRecognizer* dissmisGesture;
 
 @property (strong, nonatomic) NSArray* actions;
 @property (strong, nonatomic) NSArray* cancelActions;
@@ -42,7 +43,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     [self configureActionSheetTableView];
-    [self initDissmisGesture];
+    [self enableDissmisGesture:YES];
 }
 
 - (void)viewDidAppear:(BOOL)animated{
@@ -50,15 +51,42 @@
     [self showActionSheet:YES completion:nil];
 }
 
-- (void)initDissmisGesture{
-    UISwipeGestureRecognizer* dissmisGesture = [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(close)];
-    dissmisGesture.direction = UISwipeGestureRecognizerDirectionDown;
-    [self.view addGestureRecognizer:dissmisGesture];
+-(void)viewWillTransitionToSize:(CGSize)size withTransitionCoordinator:(id<UIViewControllerTransitionCoordinator>)coordinator{
+    CGFloat indent = 10.f;
+
+    CGRect frame = self.actionsSheetTableView.frame;
+    frame.size.height = self.actionsSheetTableView.contentSize.height;
+    frame.size.width = size.width - 2*indent;
+    frame.origin.y = size.height - frame.size.height - indent;
+    self.actionsSheetTableView.frame = frame;
+    [self.actionsSheetTableView reloadData];
+    
+    if (self.actionsSheetTableView.frame.size.height > size.height) {
+        self.actionsSheetTableView.scrollEnabled = YES;
+        [self enableDissmisGesture:NO];
+        
+        CGRect frame = self.actionsSheetTableView.frame;
+        frame.size.height = size.height;
+        frame.origin.y = 0;
+        self.actionsSheetTableView.frame = frame;
+        [self.actionsSheetTableView reloadData];
+    } else {
+        self.actionsSheetTableView.scrollEnabled = NO;
+        [self enableDissmisGesture:YES];
+    }
+}
+
+- (void)enableDissmisGesture:(BOOL)enable{
+    if (enable) {
+        [self.view addGestureRecognizer:self.dissmisGesture];
+    } else {
+        [self.view removeGestureRecognizer:self.dissmisGesture];
+    }
 }
 
 - (void)configureActionSheetTableView{
     CGFloat indent = 10.f;
-    ActionSheetTableView* actionsSheetTableView = [[ActionSheetTableView alloc] initWithFrame:CGRectMake(self.view.frame.origin.x + indent, self.view.frame.origin.y, self.view.frame.size.width - 2 * indent, self.view.frame.size.height)];
+    ActionSheetTableView* actionsSheetTableView = [[ActionSheetTableView alloc] initWithFrame:CGRectMake(indent, 0, self.view.frame.size.width - 2 * indent, self.view.frame.size.height)];
     self.actionsSheetTableView = actionsSheetTableView;
     [self.view addSubview:self.actionsSheetTableView];
     
@@ -147,6 +175,17 @@
 
     _cancelActions = @[cancelAction];
     return _cancelActions;
+}
+
+- (UIGestureRecognizer *)dissmisGesture{
+    if (_dissmisGesture) {
+        return _dissmisGesture;
+    }
+    
+    UISwipeGestureRecognizer* dissmisGesture = [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(close)];
+    dissmisGesture.direction = UISwipeGestureRecognizerDirectionDown;
+    _dissmisGesture = dissmisGesture;
+    return _dissmisGesture;
 }
 
 #pragma mark - PreviewViewDelegate
