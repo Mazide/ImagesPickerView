@@ -13,6 +13,7 @@
 #import "ActionSheetTableView.h"
 #import "TransitionAnimationController.h"
 #import "TransitionDelegate.h"
+#import <Photos/Photos.h>
 
 @interface ImagePickerViewController () <PreviewViewDelegate, UIDocumentMenuDelegate, UIDocumentPickerDelegate>
 
@@ -42,13 +43,43 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    [self configureActionSheetTableView];
-    [self enableDissmisGesture:YES];
 }
 
 - (void)viewDidAppear:(BOOL)animated{
     [super viewDidAppear:animated];
-    [self showActionSheet:YES completion:nil];
+    [self requestAuthorizationIfNeededWithCompletion:^(PHAuthorizationStatus status) {
+        if (status != PHAuthorizationStatusDenied) {
+            [self configureActionSheetTableView];
+            [self showActionSheet:YES completion:nil];
+        } else {
+            [self showPermissionsAlertWithCompletionHandler:^{
+                [self dismissViewControllerAnimated:YES completion:nil];
+            }];
+        }
+    }];
+}
+
+- (void)showPermissionsAlertWithCompletionHandler:(void (^)())completionHandler{
+    UIAlertController* alertVC = [UIAlertController alertControllerWithTitle:@"Error!" message:@"Need permissions" preferredStyle:UIAlertControllerStyleAlert];
+    UIAlertAction* okAction = [UIAlertAction actionWithTitle:@"Ok" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+        completionHandler ? completionHandler() : nil;
+    }];
+    [alertVC addAction:okAction];
+    [self presentViewController:alertVC animated:YES completion:nil];
+}
+
+- (void)requestAuthorizationIfNeededWithCompletion:(void (^)(PHAuthorizationStatus))completionHandler{
+    
+    PHAuthorizationStatus status = [PHPhotoLibrary authorizationStatus];
+    if (status == PHAuthorizationStatusNotDetermined) {
+        [PHPhotoLibrary requestAuthorization:^(PHAuthorizationStatus status) {
+            dispatch_async(dispatch_get_main_queue(), ^{
+                completionHandler ? completionHandler(status) : nil;
+            });
+        }];
+    } else {
+        completionHandler ? completionHandler(status) : nil;
+    }
 }
 
 -(void)viewWillTransitionToSize:(CGSize)size withTransitionCoordinator:(id<UIViewControllerTransitionCoordinator>)coordinator{
@@ -56,7 +87,7 @@
 
     CGRect frame = self.actionsSheetTableView.frame;
     frame.size.height = self.actionsSheetTableView.contentSize.height;
-    frame.size.width = size.width - 2*indent;
+    frame.size.width = size.width - 2 * indent;
     frame.origin.y = size.height - frame.size.height - indent;
     self.actionsSheetTableView.frame = frame;
     [self.actionsSheetTableView reloadData];
@@ -104,7 +135,7 @@
     self.actionsSheetTableView.actionSheetDelegate = self.actionsTableViewService;
     
     [self.actionsSheetTableView reloadData];
-    
+    [self enableDissmisGesture:YES];
     [self resizeTableViewToContent:self.actionsSheetTableView];
 }
 
