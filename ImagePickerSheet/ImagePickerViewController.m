@@ -74,6 +74,7 @@
         self.actionsSheetTableView.scrollEnabled = NO;
         [self enableDissmisGesture:YES];
     }
+    [self.actionsSheetTableView reloadData];
 }
 
 - (void)enableDissmisGesture:(BOOL)enable{
@@ -120,7 +121,7 @@
     }];
 }
 
-#pragma mark - lazy actions
+#pragma mark - lazy init
 
 - (NSArray*)actions{
 
@@ -212,12 +213,24 @@
 #pragma mark - animation 
 
 - (void)showActionSheet:(BOOL)show completion:(void (^)())completionBlock{
-
+    
+    [self.actionsSheetTableView reloadData];
+    
     NSTimeInterval animationDuration = show ? 0.2f : 0.15f;
     
     CGFloat showedY = self.view.frame.size.height - self.actionsSheetTableView.frame.size.height;
     CGFloat hiddenY = self.view.frame.size.height;
     CGFloat destionationY = show ? showedY : hiddenY;
+    
+    CGSize size = self.view.frame.size;
+    if (self.actionsSheetTableView.frame.size.height >= size.height) {
+        self.actionsSheetTableView.scrollEnabled = YES;
+        [self enableDissmisGesture:NO];
+    } else {
+        self.actionsSheetTableView.scrollEnabled = NO;
+        [self enableDissmisGesture:YES];
+    }
+
     
     [UIView animateWithDuration:animationDuration animations:^{
         CGRect frame = self.actionsSheetTableView.frame;
@@ -248,7 +261,9 @@
 
 - (void)documentMenu:(UIDocumentMenuViewController *)documentMenu didPickDocumentPicker:(UIDocumentPickerViewController *)documentPicker{
     documentPicker.delegate = self;
-    [self presentViewController:documentPicker animated:YES completion:nil];
+    [self showActionSheet:NO completion:^{
+        [self presentViewController:documentPicker animated:YES completion:nil];
+    }];
 }
 
 - (void)documentMenuWasCancelled:(UIDocumentMenuViewController *)documentMenu{
