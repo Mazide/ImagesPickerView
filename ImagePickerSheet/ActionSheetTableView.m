@@ -46,7 +46,6 @@ static const NSInteger previewRowIndex = 0;
     self.backgroundColor = [UIColor clearColor];
     self.scrollEnabled = NO;
     self.separatorStyle = UITableViewCellSeparatorStyleNone;
-
     
     NSString* actionCellIdentifier = NSStringFromClass([ActionsSheetCell class]);
     [self registerNib:[UINib nibWithNibName:actionCellIdentifier bundle:nil] forCellReuseIdentifier:actionCellIdentifier];

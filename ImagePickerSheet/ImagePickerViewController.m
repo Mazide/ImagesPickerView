@@ -47,7 +47,6 @@
 }
 
 - (void)showActionSheet{
-    
     [self requestAuthorizationIfNeededWithCompletion:^(PHAuthorizationStatus status) {
         if (status != PHAuthorizationStatusDenied) {
             [self configureActionSheetTableView];
@@ -70,7 +69,6 @@
 }
 
 - (void)requestAuthorizationIfNeededWithCompletion:(void (^)(PHAuthorizationStatus))completionHandler{
-    
     PHAuthorizationStatus status = [PHPhotoLibrary authorizationStatus];
     if (status == PHAuthorizationStatusNotDetermined) {
         [PHPhotoLibrary requestAuthorization:^(PHAuthorizationStatus status) {
@@ -98,7 +96,6 @@
 }
 
 - (void)fillSizeIfNeeded:(CGSize)size{
-    NSLog(@"self.actionsSheetTableView.frame.size.height %f", self.actionsSheetTableView.frame.size.height);
     if (self.actionsSheetTableView.frame.size.height >= size.height) {
         self.actionsSheetTableView.scrollEnabled = YES;
         [self enableDissmisGesture:NO];
@@ -256,7 +253,6 @@
     [self.actionsSheetTableView reloadData];
     
     NSTimeInterval animationDuration = show ? 0.2f : 0.15f;
-    
     
     //resize to content
     CGRect frame = self.actionsSheetTableView.frame;

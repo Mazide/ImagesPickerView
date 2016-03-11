@@ -39,7 +39,7 @@
     NSInteger actionRow = [self.actions indexOfObject:action] - (self.previewView ? 1 : 0);
     self.attachActionIndexPath = [NSIndexPath indexPathForRow:actionRow inSection:0];
   
-    NSMutableArray* newActions = [NSMutableArray arrayWithArray:self.actions];
+    NSMutableArray* newActions = [self.actions mutableCopy];
     
     NSInteger actionIndex = [self.actions indexOfObject:action];
     [newActions replaceObjectAtIndex:actionIndex withObject:newAction];
@@ -114,7 +114,7 @@
     
     Action* action = [self itemForIndexPath:indexPath];
     
-    if (!action)
+    if (!action || ![action isKindOfClass:[Action class]])
         return;
     
     action.handler ? action.handler(action) : nil;

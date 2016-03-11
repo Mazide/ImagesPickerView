@@ -131,13 +131,13 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		952D81781C8896BF00DCED39 /* Help */ = {
+		952D81781C8896BF00DCED39 /* appearence */ = {
 			isa = PBXGroup;
 			children = (
 				952D81791C8896EA00DCED39 /* UITableViewCell+RoundedCorners.h */,
 				952D817A1C8896EA00DCED39 /* UITableViewCell+RoundedCorners.m */,
 			);
-			name = Help;
+			name = appearence;
 			sourceTree = "<group>";
 		};
 		954550861C89BC3A00170E69 /* CustomTransition */ = {
@@ -163,7 +163,7 @@
 				954550861C89BC3A00170E69 /* CustomTransition */,
 				95EAA3CF1C8886BE00D64287 /* Cells */,
 				95EAA3C51C88627300D64287 /* PreviewView */,
-				952D81781C8896BF00DCED39 /* Help */,
+				952D81781C8896BF00DCED39 /* appearence */,
 			);
 			name = Internal;
 			sourceTree = "<group>";
