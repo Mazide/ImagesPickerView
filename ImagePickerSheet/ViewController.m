@@ -9,7 +9,7 @@
 #import "ViewController.h"
 #import "ImagePickerViewController.h"
 
-@interface ViewController () <ImagePickerViewControllerDelegate>
+@interface ViewController () <ImagePickerViewControllerDelegate, UIDocumentMenuDelegate>
 
 @end
 
@@ -44,8 +44,14 @@
 }
 
 - (void)imagePickerController:(ImagePickerViewController *)picker needOpenDocumentMenuVC:(UIDocumentMenuViewController *)documentMenuVC{
+    documentMenuVC.delegate = self;
     [self presentViewController:documentMenuVC animated:YES completion:nil];
 }
 
+#pragma mark - UIDocumentMenuDelegate
+
+- (void)documentMenu:(UIDocumentMenuViewController *)documentMenu didPickDocumentPicker:(UIDocumentPickerViewController *)documentPicker{
+    [self presentViewController:documentPicker animated:YES completion:nil];
+}
 
 @end

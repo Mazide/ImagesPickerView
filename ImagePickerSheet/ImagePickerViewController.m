@@ -124,7 +124,7 @@
 
 - (void)configureActionSheetTableView{
     CGFloat indent = 10.f;
-    ActionSheetTableView* actionsSheetTableView = [[ActionSheetTableView alloc] initWithFrame:CGRectMake(indent, 0, self.view.frame.size.width - 2 * indent, self.view.frame.size.height)];
+    ActionSheetTableView* actionsSheetTableView = [[ActionSheetTableView alloc] initWithFrame:CGRectMake(indent, self.view.frame.size.height, self.view.frame.size.width - 2 * indent, self.view.frame.size.height)];
     self.actionsSheetTableView = actionsSheetTableView;
     [self.view addSubview:self.actionsSheetTableView];
     
@@ -257,16 +257,34 @@
     
     NSTimeInterval animationDuration = show ? 0.2f : 0.15f;
     
+    
+    //resize to content
+    CGRect frame = self.actionsSheetTableView.frame;
+    frame.size.height = self.actionsSheetTableView.contentSize.height;
+    self.actionsSheetTableView.frame = frame;
+    
     CGFloat showedY = self.view.frame.size.height - self.actionsSheetTableView.frame.size.height;
     CGFloat hiddenY = self.view.frame.size.height;
-    CGFloat destionationY = show ? showedY : hiddenY;
-
+    
+    CGSize destinationSize = self.actionsSheetTableView.frame.size;
+    
+    if (showedY < 0) {
+        showedY = 0;
+        destinationSize.height = self.view.frame.size.height;
+        [self enableDissmisGesture:NO];
+        self.actionsSheetTableView.scrollEnabled = YES;
+    }
+    
+    CGFloat destinationY = show ? showedY : hiddenY;
+    
     [UIView animateWithDuration:animationDuration animations:^{
         CGRect frame = self.actionsSheetTableView.frame;
-        frame.origin.y = destionationY;
+        frame.size = destinationSize;
+        frame.origin.y = destinationY;
         self.actionsSheetTableView.frame = frame;
     } completion:^(BOOL finished) {
         if (finished) {
+            [self.actionsSheetTableView reloadData];
             completionBlock ? completionBlock() : nil;
         }
     }];
