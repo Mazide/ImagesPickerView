@@ -15,7 +15,7 @@
 #import "TransitionDelegate.h"
 #import <Photos/Photos.h>
 
-@interface ImagePickerViewController () <PreviewViewDelegate, UIDocumentMenuDelegate, UIDocumentPickerDelegate>
+@interface ImagePickerViewController () <PreviewViewDelegate>
 
 @property (weak, nonatomic)  ActionSheetTableView* actionsSheetTableView;
 @property (strong, nonatomic) ActionsTableViewService* actionsTableViewService;
@@ -41,12 +41,13 @@
     return self;
 }
 
-- (void)viewDidLoad {
-    [super viewDidLoad];
+- (void)viewWillAppear:(BOOL)animated{
+    [super viewWillAppear:animated];
+    [self showActionSheet];
 }
 
-- (void)viewDidAppear:(BOOL)animated{
-    [super viewDidAppear:animated];
+- (void)showActionSheet{
+    
     [self requestAuthorizationIfNeededWithCompletion:^(PHAuthorizationStatus status) {
         if (status != PHAuthorizationStatusDenied) {
             [self configureActionSheetTableView];
@@ -90,9 +91,15 @@
     frame.size.width = size.width - 2 * indent;
     frame.origin.y = size.height - frame.size.height - indent;
     self.actionsSheetTableView.frame = frame;
-    [self.actionsSheetTableView reloadData];
+
+    [self fillSizeIfNeeded:size];
     
-    if (self.actionsSheetTableView.frame.size.height > size.height) {
+    [self.actionsSheetTableView reloadData];
+}
+
+- (void)fillSizeIfNeeded:(CGSize)size{
+    NSLog(@"self.actionsSheetTableView.frame.size.height %f", self.actionsSheetTableView.frame.size.height);
+    if (self.actionsSheetTableView.frame.size.height >= size.height) {
         self.actionsSheetTableView.scrollEnabled = YES;
         [self enableDissmisGesture:NO];
         
@@ -100,13 +107,12 @@
         frame.size.height = size.height;
         frame.origin.y = 0;
         self.actionsSheetTableView.frame = frame;
-        [self.actionsSheetTableView reloadData];
     } else {
         self.actionsSheetTableView.scrollEnabled = NO;
         [self enableDissmisGesture:YES];
     }
-    [self.actionsSheetTableView reloadData];
 }
+
 
 - (void)enableDissmisGesture:(BOOL)enable{
     if (enable) {
@@ -135,15 +141,6 @@
     self.actionsSheetTableView.actionSheetDelegate = self.actionsTableViewService;
     
     [self.actionsSheetTableView reloadData];
-    [self enableDissmisGesture:YES];
-    [self resizeTableViewToContent:self.actionsSheetTableView];
-}
-
-- (void)resizeTableViewToContent:(UITableView*)tableView{
-    CGRect frame = tableView.frame;
-    frame.size.height = tableView.contentSize.height;
-    frame.origin.y = self.view.frame.size.height;
-    tableView.frame = frame;
 }
 
 - (void)close{
@@ -234,6 +231,17 @@
         }];
     }];
     
+    if (assets.count == 0) {
+        Action* allAlbumsAction = [Action new];
+        allAlbumsAction.title = @"All albums";
+        allAlbumsAction.handler = ^(Action* action){
+            [self showActionSheet:NO completion:^{
+                [self presentImagePickerViewControllerWithSourceType:UIImagePickerControllerSourceTypePhotoLibrary];
+            }];
+        };
+        attachFilesAction = allAlbumsAction;
+    }
+    
     [self.actionsTableViewService replaceAction:self.currentFirstAction byAction:attachFilesAction];
     self.currentFirstAction = attachFilesAction;
     
@@ -252,17 +260,7 @@
     CGFloat showedY = self.view.frame.size.height - self.actionsSheetTableView.frame.size.height;
     CGFloat hiddenY = self.view.frame.size.height;
     CGFloat destionationY = show ? showedY : hiddenY;
-    
-    CGSize size = self.view.frame.size;
-    if (self.actionsSheetTableView.frame.size.height >= size.height) {
-        self.actionsSheetTableView.scrollEnabled = YES;
-        [self enableDissmisGesture:NO];
-    } else {
-        self.actionsSheetTableView.scrollEnabled = NO;
-        [self enableDissmisGesture:YES];
-    }
 
-    
     [UIView animateWithDuration:animationDuration animations:^{
         CGRect frame = self.actionsSheetTableView.frame;
         frame.origin.y = destionationY;
@@ -274,41 +272,27 @@
     }];
 }
 
-#pragma mark - presenting
+#pragma mark - external presenting
 
 - (void)presentImagePickerViewControllerWithSourceType:(UIImagePickerControllerSourceType)sourceType{
     UIImagePickerController* pickerViewController = [UIImagePickerController new];
     pickerViewController.sourceType = sourceType;
-    [self presentViewController:pickerViewController animated:YES completion:nil];
+    
+    [self dismissViewControllerAnimated:YES completion:^{
+        if (self.delegate && [self.delegate respondsToSelector:@selector(imagePickerController:needOpenUIImagePickerVC:)]) {
+            [self.delegate imagePickerController:self needOpenUIImagePickerVC:pickerViewController];
+        }
+    }];
 }
 
 - (void)presentDocumentMenu{
     UIDocumentMenuViewController* documentMenuViewController = [[UIDocumentMenuViewController alloc] initWithDocumentTypes:@[@"public.image"] inMode:UIDocumentPickerModeImport];
-    documentMenuViewController.delegate = self;
-    [self presentViewController:documentMenuViewController animated:YES completion:nil];
-}
 
-#pragma mark - UIDocumentMenuDelegate
-
-- (void)documentMenu:(UIDocumentMenuViewController *)documentMenu didPickDocumentPicker:(UIDocumentPickerViewController *)documentPicker{
-    documentPicker.delegate = self;
-    [self showActionSheet:NO completion:^{
-        [self presentViewController:documentPicker animated:YES completion:nil];
+    [self dismissViewControllerAnimated:YES completion:^{
+        if (self.delegate && [self.delegate respondsToSelector:@selector(imagePickerController:needOpenUIImagePickerVC:)]) {
+            [self.delegate imagePickerController:self needOpenDocumentMenuVC:documentMenuViewController];
+        }
     }];
-}
-
-- (void)documentMenuWasCancelled:(UIDocumentMenuViewController *)documentMenu{
-    [self showActionSheet:YES completion:nil];
-}
-
-#pragma mark - UIDocumentPickerDelegate
-
-- (void)documentPicker:(UIDocumentPickerViewController *)controller didPickDocumentAtURL:(NSURL *)url{
-    
-}
-
-- (void)documentPickerWasCancelled:(UIDocumentPickerViewController *)controller{
-    [self showActionSheet:YES completion:nil];
 }
 
 @end

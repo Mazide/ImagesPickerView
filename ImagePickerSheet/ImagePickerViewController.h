@@ -12,7 +12,10 @@
 
 @protocol ImagePickerViewControllerDelegate <NSObject>
 
+@optional
 - (void)imagePickerController:(ImagePickerViewController *)picker didFinishPickingAssets:(NSArray *)assets;
+- (void)imagePickerController:(ImagePickerViewController *)picker needOpenUIImagePickerVC:(UIImagePickerController*)picker;
+- (void)imagePickerController:(ImagePickerViewController *)picker needOpenDocumentMenuVC:(UIDocumentMenuViewController*)documentMenuVC;
 - (void)imagePickerControllerDidCancel:(ImagePickerViewController *)picker;
 
 @end
