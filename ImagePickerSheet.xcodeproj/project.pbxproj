@@ -350,7 +350,7 @@
 				TargetAttributes = {
 					95EAA3571C8861B500D64287 = {
 						CreatedOnToolsVersion = 7.2.1;
-						DevelopmentTeam = 4GFN9942V9;
+						DevelopmentTeam = Q63LADL39L;
 						SystemCapabilities = {
 							com.apple.iCloud = {
 								enabled = 1;
@@ -567,7 +567,7 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				INFOPLIST_FILE = ImagePickerSheet/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.ddgsfsdf.ImagsdfsfhjhjePickerSheehhhghhkksk;
+				PRODUCT_BUNDLE_IDENTIFIER = com.ddgcorp.ImagePickerViewController;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 			};
@@ -582,7 +582,7 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				INFOPLIST_FILE = ImagePickerSheet/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.ddgsfsdf.ImagsdfsfhjhjePickerSheehhhghhkksk;
+				PRODUCT_BUNDLE_IDENTIFIER = com.ddgcorp.ImagePickerViewController;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 			};
